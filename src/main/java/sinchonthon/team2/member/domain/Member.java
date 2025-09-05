@@ -1,6 +1,8 @@
 package sinchonthon.team2.member.domain;
 
 import jakarta.persistence.*;
+
+import lombok.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.image.domain.Image;
@@ -13,14 +15,26 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "members")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
+    //로그인 아이디
+    private String loginId;
     @Column(name = "member_name")
-    private String name;
+    private String nickname;
+
+    private String email;
+
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_school")
@@ -58,12 +72,14 @@ public class Member {
     /**
      * 정적 팩토리 메서드에서만 사용하는 생성자.
      */
-    private Member(String name, School school, String email, String password, Image image) {
-        this.name = name;
+    private Member(String nickname, School school, String email, String password, Image image) {
+        this.nickname = nickname;
+      
         this.email = email;
         this.password = password;
         this.school = school;
         this.image = image;
+
     }
 
     /**
