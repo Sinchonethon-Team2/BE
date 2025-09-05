@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import sinchonthon.team2.challenge.domain.Challenge;
 import sinchonthon.team2.common.domain.Period;
 import sinchonthon.team2.common.domain.ResultStatus;
+import sinchonthon.team2.image.domain.Image;
 import sinchonthon.team2.member.domain.Member;
 import sinchonthon.team2.membership.domain.Membership;
 import sinchonthon.team2.subject.domain.Subject;
@@ -48,11 +49,19 @@ public class Team {
 
     /**
      * 팀의 챌린지 컬렉션.
-     * 일대다 이므로, 단방향 연관관계로 설계하였습니다.
+     * 일대다 이므로, 개발 편의성을 위해 양방향 연관관계로 설계하였습니다.
      */
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "team")
     @JoinColumn(name = "challenges")
     private List<Challenge> challenges = new ArrayList<>();
+
+    /**
+     * 팀 대표 이미지.
+     * 일대일 단방향 연관관계.
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_image")
+    private Image image;
 
     @Column(name = "team_notice")
     private String notice;
@@ -63,6 +72,9 @@ public class Team {
     @Embedded
     @Column(name = "team_period")
     private Period period;
+
+    @Column(name = "team_current")
+    private int current;
 
     @Column(name = "team_total")
     private int total;
@@ -84,24 +96,27 @@ public class Team {
     /**
      * 정적 팩토리 메서드에서만 사용할 생성자.
      */
-    private Team(Member holder,  String notice, String name, Period period, int total, int amount, int goal) {
+    private Team(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image) {
         this.holder = holder;
-        // 최초 개설자를 참여자로 등록한다.
-        this.memberships.add(Membership.create(this, holder));
         this.notice = notice;
         this.name = name;
         this.period = period;
         this.total = total;
         this.amount = amount;
         this.goal = goal;
+        this.image = image;
     }
 
     /**
      * 단일 공통 진입점으로 사용하는 정적 팩토리 메서드.
      * 팀 최초 등록시 사용한다.
      */
-    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal) {
-        return new Team(holder, notice, name, period, total, amount, goal);
-    }
+    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image) {
 
+        Team team = new Team(holder, notice, name, period, total, amount, goal, image);
+        Membership membership = Membership.create(team, holder);
+        team.memberships.add(membership);
+
+        return team;
+    }
 }
