@@ -28,9 +28,9 @@ public class Image {
     /**
      * 정적 팩토리 메서드에서만 사용하는 기본 생성자.
      */
-    private Image (String originalName) {
+    private Image (String originalName, String encodedName) {
         this.originalName = originalName;
-        this.encodedName = UUID.randomUUID().toString() + "_" + encodedName;
+        this.encodedName = encodedName;
     }
 
     /**
@@ -38,7 +38,8 @@ public class Image {
      * 이미지 등록시 호출합니다.
      */
     public static Image create(String originalName) {
-        return new Image(originalName);
+        String encodedName = UUID.randomUUID().toString() + "_" + originalName;
+        return new Image(originalName, encodedName);
     }
 }
 
