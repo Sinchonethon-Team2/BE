@@ -20,7 +20,8 @@ COPY . .
 RUN ./gradlew build -x test --no-daemon
 
 # ---- 실행 단계 ----
-FROM openjdk:21-jdk
+FROM eclipse-temurin:21-jre-alpine
+
 
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
