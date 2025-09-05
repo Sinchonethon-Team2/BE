@@ -33,14 +33,6 @@ public class Member {
     private String password;
 
     /**
-     * 사용자가 참여한 팀.
-     * 양방향 연관관계로 설정하였습니다.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    /**
      * Member - Team 다대다 관계 분리를 위해 사용하는 연관관계.
      * 개발 편의성을 위해 양방향 연관관계로 설정하였습니다.
      */

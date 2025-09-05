@@ -32,10 +32,6 @@ public class Challenge {
     @Column(name = "challenge_task")
     private String task;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "challenge_result_status")
-    private ResultStatus resultStatus = ResultStatus.NEUTRAL;
-
     @Column(name = "challenge_notice")
     private String notice;
 
