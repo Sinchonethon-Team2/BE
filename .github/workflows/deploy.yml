@@ -39,6 +39,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/myapp   # docker-compose.yml 있는 디렉토리로 이동
-            docker-compose pull      # 최신 이미지 가져오기
-            docker-compose down      # 기존 컨테이너 중지
-            docker-compose up -d     # 새 컨테이너 실행
+            docker compose pull      # 최신 이미지 가져오기
+            docker compose down      # 기존 컨테이너 중지
+            docker compose up -d     # 새 컨테이너 실행
