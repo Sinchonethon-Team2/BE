@@ -13,7 +13,7 @@ public record TeamResponseDto(
         int amount,
         int goal,
         String recruitStatus,
-        String resulStatus,
+        String resultStatus,
         String holderName,
         Long subjectId,
         String subjectName,

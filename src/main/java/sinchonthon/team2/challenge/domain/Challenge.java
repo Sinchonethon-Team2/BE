@@ -2,6 +2,7 @@ package sinchonthon.team2.challenge.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.common.domain.Period;
 import sinchonthon.team2.common.domain.ResultStatus;
@@ -11,6 +12,7 @@ import sinchonthon.team2.team.domain.Team;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "challenges")
+@Getter
 public class Challenge {
 
     @Id @GeneratedValue
@@ -42,6 +44,11 @@ public class Challenge {
     /**
      * 정적 팩토리 메서드에서만 사용할 생성자.
      */
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "challenge_result_status")
+    private ResultStatus resultStatus = ResultStatus.NEUTRAL;
+
     private Challenge(Team team, Ingredient ingredient) {
         this.team = team;
         this.ingredient = ingredient;

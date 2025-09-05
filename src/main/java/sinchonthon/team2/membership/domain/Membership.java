@@ -2,6 +2,7 @@ package sinchonthon.team2.membership.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.member.domain.Member;
 import sinchonthon.team2.team.domain.Team;
@@ -12,6 +13,7 @@ import sinchonthon.team2.team.domain.Team;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "memberships")
+@Getter
 public class Membership {
 
     @Id @GeneratedValue
