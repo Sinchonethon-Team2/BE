@@ -22,14 +22,14 @@ public class Membership {
      * 개발 편의성을 위해 양방향으로 설계하였습니다.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     /**
      * 개발 편의성을 위해 양방향으로 설계하였습니다.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     /**
