@@ -67,4 +67,9 @@ public class Challenge {
         this.task = task;
         this.notice = notice;
     }
+
+    /**
+     * 챌린지 완료시 사용하는 메서드입니다.
+     */
+    public
 }

@@ -11,7 +11,7 @@ import sinchonthon.team2.common.dto.response.ApiResponse;
 
 /**
  * 챌린지 생성 (서비스만)
- * 챌린지 수정
+ * 챌린지 수정 [o]
  * 챌린지 완료
  * 챌린지 실패
  */
@@ -31,4 +31,6 @@ public class ChallengeController {
 
         return ResponseEntity.ok(ApiResponse.success("챌린지 수정에 성공하였습니다."));
     }
+
+    @
 }
