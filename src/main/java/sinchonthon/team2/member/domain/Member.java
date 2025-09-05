@@ -1,6 +1,7 @@
 package sinchonthon.team2.member.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 import sinchonthon.team2.membership.domain.Membership;
 import sinchonthon.team2.team.domain.Team;
 
@@ -9,14 +10,26 @@ import java.util.List;
 
 @Entity
 @Table(name = "members")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
+    //로그인 아이디
+    private String loginId;
     @Column(name = "member_name")
-    private String name;
+    private String nickname;
+
+    private String email;
+
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_school")
@@ -40,8 +53,8 @@ public class Member {
     /**
      * 정적 팩토리 메서드에서만 사용하는 생성자.
      */
-    private Member(String name, School school) {
-        this.name = name;
+    private Member(String nickname, School school) {
+        this.nickname = nickname;
         this.school = school;
     }
 
