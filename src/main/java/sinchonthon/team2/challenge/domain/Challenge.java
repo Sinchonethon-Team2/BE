@@ -22,7 +22,7 @@ public class Challenge {
      * 해당 챌린지를 등록한 팀입니다.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @Embedded
@@ -31,10 +31,6 @@ public class Challenge {
 
     @Column(name = "challenge_task")
     private String task;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "challenge_result_status")
-    private ResultStatus resultStatus = ResultStatus.NEUTRAL;
 
     @Column(name = "challenge_notice")
     private String notice;
