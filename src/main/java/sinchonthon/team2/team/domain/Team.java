@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.challenge.domain.Challenge;
+import sinchonthon.team2.challenge.domain.Ingredient;
 import sinchonthon.team2.common.domain.Period;
 import sinchonthon.team2.common.domain.ResultStatus;
 import sinchonthon.team2.image.domain.Image;
@@ -111,11 +112,28 @@ public class Team {
      * 단일 공통 진입점으로 사용하는 정적 팩토리 메서드.
      * 팀 최초 등록시 사용한다.
      */
-    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image) {
+
+    public void addChallenge(int challengeCount) {
+        Ingredient[] ingredients = Ingredient.values();
+
+        if (challengeCount < 4||challengeCount > ingredients.length) {
+            throw new IllegalArgumentException("챌린지 개수는 4개 이상 " + ingredients.length + "개 이하만 가능합니다");
+        }
+
+        for ( int i = 0; i < challengeCount; i++ ) {
+            Ingredient ingredient = ingredients[i];
+            Challenge challenge = Challenge.create(this, ingredient);
+            this.challenges.add(challenge);
+        }
+    }
+
+    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image, int challengeCount) {
 
         Team team = new Team(holder, notice, name, period, total, amount, goal, image);
         Membership membership = Membership.create(team, holder);
         team.memberships.add(membership);
+
+        team.addChallenge(challengeCount);
 
         return team;
     }
