@@ -1,9 +1,17 @@
+<<<<<<< HEAD:team2/.github/workflows/deploy.yml
 name: CI/CD Pipeline
+=======
+name: Deploy to EC2
+>>>>>>> 0a51a6006f37faeb03845e7b7489edcaa3dd6ecd:.github/workflows/deploy.yml
 
 on:
   push:
     branches:
+<<<<<<< HEAD:team2/.github/workflows/deploy.yml
       - main  # main 브랜치에 push될 때
+=======
+      - main
+>>>>>>> 0a51a6006f37faeb03845e7b7489edcaa3dd6ecd:.github/workflows/deploy.yml
 
 jobs:
   build-and-deploy:
@@ -39,6 +47,12 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/myapp   # docker-compose.yml 있는 디렉토리로 이동
+<<<<<<< HEAD:team2/.github/workflows/deploy.yml
             sudo docker compose pull      # 최신 이미지 가져오기
             sudo docker compose down      # 기존 컨테이너 중지
             sudo docker compose up -d     # 새 컨테이너 실행
+=======
+            docker-compose pull      # 최신 이미지 가져오기
+            docker-compose down      # 기존 컨테이너 중지
+            docker-compose up -d     # 새 컨테이너 실행
+>>>>>>> 0a51a6006f37faeb03845e7b7489edcaa3dd6ecd:.github/workflows/deploy.yml
