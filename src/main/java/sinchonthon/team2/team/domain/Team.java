@@ -2,10 +2,13 @@ package sinchonthon.team2.team.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.challenge.domain.Challenge;
+import sinchonthon.team2.challenge.domain.Ingredient;
 import sinchonthon.team2.common.domain.Period;
 import sinchonthon.team2.common.domain.ResultStatus;
+import sinchonthon.team2.image.domain.Image;
 import sinchonthon.team2.member.domain.Member;
 import sinchonthon.team2.membership.domain.Membership;
 import sinchonthon.team2.subject.domain.Subject;
@@ -15,6 +18,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Table(name = "teams")
 public class Team {
 
@@ -27,7 +31,7 @@ public class Team {
      * 반대 방향 연관 관계는 NULL 의 존재 가능성으로 인해 설계하지 않았습니다.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "holder")
+    @JoinColumn(name = "holder_id")
     private Member holder;
 
     /**
@@ -43,16 +47,24 @@ public class Team {
      * NULL 방지를 위해 반대 방향 연관관계는 설정하지 않았습니다.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject")
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     /**
      * 팀의 챌린지 컬렉션.
-     * 일대다 이므로, 단방향 연관관계로 설계하였습니다.
+     * 일대다 이므로, 개발 편의성을 위해 양방향 연관관계로 설계하였습니다.
      */
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenges")
+    @OneToMany(mappedBy = "team")
+    @JoinColumn(name = "challenges_id")
     private List<Challenge> challenges = new ArrayList<>();
+
+    /**
+     * 팀 대표 이미지.
+     * 일대일 단방향 연관관계.
+     */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_image_id")
+    private Image image;
 
     @Column(name = "team_notice")
     private String notice;
@@ -63,6 +75,9 @@ public class Team {
     @Embedded
     @Column(name = "team_period")
     private Period period;
+
+    @Column(name = "team_current")
+    private int current;
 
     @Column(name = "team_total")
     private int total;
@@ -84,24 +99,44 @@ public class Team {
     /**
      * 정적 팩토리 메서드에서만 사용할 생성자.
      */
-    private Team(Member holder,  String notice, String name, Period period, int total, int amount, int goal) {
+    private Team(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image) {
         this.holder = holder;
-        // 최초 개설자를 참여자로 등록한다.
-        this.memberships.add(Membership.create(this, holder));
         this.notice = notice;
         this.name = name;
         this.period = period;
         this.total = total;
         this.amount = amount;
         this.goal = goal;
+        this.image = image;
     }
 
     /**
      * 단일 공통 진입점으로 사용하는 정적 팩토리 메서드.
      * 팀 최초 등록시 사용한다.
      */
-    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal) {
-        return new Team(holder, notice, name, period, total, amount, goal);
+
+    public void addChallenge(int challengeCount) {
+        Ingredient[] ingredients = Ingredient.values();
+
+        if (challengeCount < 4||challengeCount > ingredients.length) {
+            throw new IllegalArgumentException("챌린지 개수는 4개 이상 " + ingredients.length + "개 이하만 가능합니다");
+        }
+
+        for ( int i = 0; i < challengeCount; i++ ) {
+            Ingredient ingredient = ingredients[i];
+            Challenge challenge = Challenge.create(this, ingredient);
+            this.challenges.add(challenge);
+        }
     }
 
+    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image, int challengeCount) {
+
+        Team team = new Team(holder, notice, name, period, total, amount, goal, image);
+        Membership membership = Membership.create(team, holder);
+        team.memberships.add(membership);
+
+        team.addChallenge(challengeCount);
+
+        return team;
+    }
 }
