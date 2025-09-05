@@ -22,7 +22,7 @@ public class Challenge {
      * 해당 챌린지를 등록한 팀입니다.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @Embedded
@@ -67,9 +67,4 @@ public class Challenge {
         this.task = task;
         this.notice = notice;
     }
-
-    /**
-     * 챌린지 완료시 사용하는 메서드입니다.
-     */
-    public
 }

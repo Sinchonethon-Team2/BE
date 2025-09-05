@@ -17,11 +17,11 @@ public class ChallengeRecord {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenge")
+    @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 
     @Enumerated(EnumType.STRING)

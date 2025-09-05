@@ -18,10 +18,10 @@ public class ChallengeCommandService {
 
     private final ChallengeRepository challengeRepository;
 
-    public void fixChallenge(Long id, ChallengeFixDto dto) {
+    public void fixChallenge(Long challengeId, ChallengeFixDto dto) {
 
         // 챌린지를 조회합니다.
-        Challenge challenge = challengeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("챌린지를 찾을 수 없습니다."));
+        Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new EntityNotFoundException("챌린지를 찾을 수 없습니다."));
 
         // 챌린지를 수정합니다.
         challenge.changeChallenge(PeriodMapper.from(dto.getPeriod()), dto.getTask(), dto.getNotice());

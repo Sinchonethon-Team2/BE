@@ -28,7 +28,7 @@ public class Team {
      * 반대 방향 연관 관계는 NULL 의 존재 가능성으로 인해 설계하지 않았습니다.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "holder")
+    @JoinColumn(name = "holder_id")
     private Member holder;
 
     /**
@@ -44,7 +44,7 @@ public class Team {
      * NULL 방지를 위해 반대 방향 연관관계는 설정하지 않았습니다.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject")
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
     /**
@@ -52,7 +52,7 @@ public class Team {
      * 일대다 이므로, 개발 편의성을 위해 양방향 연관관계로 설계하였습니다.
      */
     @OneToMany(mappedBy = "team")
-    @JoinColumn(name = "challenges")
+    @JoinColumn(name = "challenges_id")
     private List<Challenge> challenges = new ArrayList<>();
 
     /**
@@ -60,7 +60,7 @@ public class Team {
      * 일대일 단방향 연관관계.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_image")
+    @JoinColumn(name = "team_image_id")
     private Image image;
 
     @Column(name = "team_notice")

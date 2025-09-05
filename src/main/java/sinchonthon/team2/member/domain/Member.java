@@ -37,7 +37,7 @@ public class Member {
      * 양방향 연관관계로 설정하였습니다.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team")
+    @JoinColumn(name = "team_id")
     private Team team;
 
     /**
@@ -52,7 +52,7 @@ public class Member {
      * 단방향 일대일 연관관계입니다.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_image")
+    @JoinColumn(name = "member_image_id")
     private Image image;
 
     /**
