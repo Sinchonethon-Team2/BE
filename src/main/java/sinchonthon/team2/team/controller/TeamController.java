@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sinchonthon.team2.member.domain.Member;
 import sinchonthon.team2.team.dto.TeamCreateRequestDto;
+import sinchonthon.team2.team.dto.TeamDetailResponseDto;
 import sinchonthon.team2.team.dto.TeamResponseDto;
 import sinchonthon.team2.team.service.TeamService;
 
@@ -20,8 +21,8 @@ public class TeamController {
     private final TeamService teamService;
 
     @PostMapping
-    public ResponseEntity<TeamResponseDto> creatTeam(@RequestBody TeamCreateRequestDto requestDto,
-                                                     @SessionAttribute(name = LOGIN_SESSION_KEY,required = false) Member loginmember){
+    public ResponseEntity<TeamResponseDto> createTeam(@RequestBody TeamCreateRequestDto requestDto,
+                                                      @SessionAttribute(name = LOGIN_SESSION_KEY,required = false) Member loginmember){
 
         if(loginmember == null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -37,8 +38,8 @@ public class TeamController {
 
     }
     @GetMapping("/{teamId}")
-    public ResponseEntity<TeamResponseDto> getTeam(@PathVariable Long teamId){
-        return ResponseEntity.ok(teamService.getTeam(teamId));
+    public ResponseEntity<TeamDetailResponseDto> getTeamDetail(@PathVariable Long teamId){
+        return ResponseEntity.ok(teamService.getTeamDetail(teamId));
     }
 
 }

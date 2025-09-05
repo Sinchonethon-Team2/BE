@@ -55,6 +55,7 @@ public class Team {
      * 일대다 이므로, 개발 편의성을 위해 양방향 연관관계로 설계하였습니다.
      */
     @OneToMany(mappedBy = "team")
+    @JoinColumn(name = "challenges")
     private List<Challenge> challenges = new ArrayList<>();
 
     /**
@@ -107,6 +108,7 @@ public class Team {
         this.amount = amount;
         this.goal = goal;
         this.image = image;
+        this.current = 0;
     }
 
     /**
@@ -128,11 +130,12 @@ public class Team {
         }
     }
 
-    public static Team create(Member holder, String notice, String name, Period period, int total, int amount, int goal, Image image, int challengeCount) {
+    public static Team create(Member holder, Subject subject, String notice, String name, Period period, int total, int amount, int goal, Image image, int challengeCount) {
 
         Team team = new Team(holder, notice, name, period, total, amount, goal, image);
         Membership membership = Membership.create(team, holder);
         team.memberships.add(membership);
+        team.current = 1;
 
         team.addChallenge(challengeCount);
 
