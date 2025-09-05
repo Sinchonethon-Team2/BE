@@ -1,4 +1,4 @@
-package sinchonthon.team2.team.domain;
+package sinchonthon.team2.team.dto;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package sinchonthon.team2.team.domain;
+package sinchonthon.team2.team.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,6 +8,10 @@ import sinchonthon.team2.member.domain.Member;
 import sinchonthon.team2.member.repository.MemberRepository;
 import sinchonthon.team2.subject.domain.Subject;
 import sinchonthon.team2.subject.repository.SubjectRepository;
+import sinchonthon.team2.team.domain.Team;
+import sinchonthon.team2.team.dto.TeamCreateRequestDto;
+import sinchonthon.team2.team.dto.TeamResponseDto;
+import sinchonthon.team2.team.repository.TeamRepository;
 
 import java.util.List;
 

@@ -1,10 +1,13 @@
-package sinchonthon.team2.team.domain;
+package sinchonthon.team2.team.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sinchonthon.team2.member.domain.Member;
+import sinchonthon.team2.team.dto.TeamCreateRequestDto;
+import sinchonthon.team2.team.dto.TeamResponseDto;
+import sinchonthon.team2.team.service.TeamService;
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
-package sinchonthon.team2.team.domain;
+package sinchonthon.team2.team.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record TeamCreateRequestDto(
