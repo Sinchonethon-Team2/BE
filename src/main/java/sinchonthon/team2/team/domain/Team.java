@@ -2,6 +2,7 @@ package sinchonthon.team2.team.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sinchonthon.team2.challenge.domain.Challenge;
 import sinchonthon.team2.challenge.domain.Ingredient;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Table(name = "teams")
 public class Team {
 

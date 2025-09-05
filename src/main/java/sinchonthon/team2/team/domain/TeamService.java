@@ -3,7 +3,9 @@ package sinchonthon.team2.team.domain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sinchonthon.team2.common.domain.Period;
 import sinchonthon.team2.member.domain.Member;
+import sinchonthon.team2.member.repository.MemberRepository;
 import sinchonthon.team2.subject.domain.Subject;
 import sinchonthon.team2.subject.repository.SubjectRepository;
 
@@ -25,9 +27,7 @@ public class TeamService {
         Subject subject = subjectRepository.findById(requestDto.subjectId())
                 .orElseThrow(()-> new IllegalArgumentException("과목을 찾을 수 없습니다."));
 
-        var period = new sinchonthon.team2.common.domain.Period();
-        period.begin = requestDto.startDate();
-        period.end = requestDto.endDate();
+        Period period = Period.create(requestDto.startDate(),requestDto.endDate());
 
         Team team = Team.create(
                 holder,
@@ -55,6 +55,7 @@ public class TeamService {
     public TeamResponseDto getTeam(Long teamId){
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(()-> new IllegalArgumentException("팀을 찾을 수 없습니다."));
+        return toResponse(team);
     }
 
     public TeamResponseDto toResponse(Team team){
@@ -70,7 +71,7 @@ public class TeamService {
                 team.getGoal(),
                 team.getRecruitStatus().name(),
                 team.getResultStatus().name(),
-                team.getHolder().getName(),
+                team.getHolder().getNickname(),
                 team.getSubject().getId(),
                 team.getSubject().getName(),
                 team.getChallenges().size()
