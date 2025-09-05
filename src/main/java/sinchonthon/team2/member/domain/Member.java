@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "members")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -28,13 +27,11 @@ public class Member {
     private Long id;
 
     //로그인 아이디
+    @Column(name = "member_login_id")
     private String loginId;
+
     @Column(name = "member_name")
     private String nickname;
-
-    private String email;
-
-    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_school")
@@ -64,9 +61,10 @@ public class Member {
     /**
      * 정적 팩토리 메서드에서만 사용하는 생성자.
      */
-    private Member(String nickname, School school, String email, String password, Image image) {
+    private Member(String loginId, String nickname, School school, String email, String password, Image image) {
+
+        this.loginId = loginId;
         this.nickname = nickname;
-      
         this.email = email;
         this.password = password;
         this.school = school;
@@ -79,7 +77,7 @@ public class Member {
      * 정적 팩토리 메서드.
      * 회원 가입에서 호출합니다.
      */
-    public static Member create(String name, School school, String email, String password, Image image) {
-        return new Member(name, school, email, password, image);
+    public static Member create(String loginId, String nickname, School school, String email, String password, Image image) {
+        return new Member(loginId, nickname, school, email, password, image);
     }
 }
